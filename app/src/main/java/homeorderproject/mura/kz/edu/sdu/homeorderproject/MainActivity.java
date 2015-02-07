@@ -104,8 +104,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 log = name.getText().toString();
                 pass = password.getText().toString();
-                final boolean[] nameCheck = {false};
-                final boolean[] passCheck = {false};
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("users");
 
@@ -113,13 +111,13 @@ public class MainActivity extends Activity {
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> users, com.parse.ParseException e) {
                         if (e == null) {
-                            nameCheck[0] = true;
                             parse = users.get(0);
                             String Name = parse.getString("Name");
                             String Password = parse.getString("Password");
                             Log.d("name", "Name " + Name + " names");
                             if (Name.equals(log) && Password.equals(pass)){
-                                intent = new Intent();
+                                intent = new Intent(MainActivity.this, allPizzas.class);
+                                startActivity(intent);
                             }
                         } else {
                             Toast.makeText(MainActivity.this, e.getMessage(),

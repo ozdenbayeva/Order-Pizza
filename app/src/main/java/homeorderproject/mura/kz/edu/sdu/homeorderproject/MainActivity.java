@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
     private void work() {
         ActionBar actionBar = getActionBar();
         if(actionBar != null){
-            actionBar.setTitle("Teacher's Journal");
+            actionBar.setTitle("Order Pizza");
         }
         context = MainActivity.this;
         dialog = new AlertDialog.Builder(context);

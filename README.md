@@ -1,3 +1,2 @@
 # HomeZakaz
-project "Home Order"
-Learning git
+project "Order Pizza"

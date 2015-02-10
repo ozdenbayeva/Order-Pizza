@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -47,7 +48,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "EMGeIYHdztJQFaraRezQlBKEp7DaRAwo6GcqNoj5",
                 "o3ipDHGnA33ROnJOUkPciBt6QBfMsF9tNlb5csfa");
@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
         parse = new ParseObject("users");
 
         work();
+
     }
 
 
@@ -105,27 +106,28 @@ public class MainActivity extends Activity {
                 log = name.getText().toString();
                 pass = password.getText().toString();
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("users");
+                if (log.length() > 0 && pass.length() > 0) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("users");
 
-                query.whereEqualTo("Name", log);
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> users, com.parse.ParseException e) {
-                        if (e == null) {
-                            parse = users.get(0);
-                            String Name = parse.getString("Name");
-                            String Password = parse.getString("Password");
-                            Log.d("name", "Name " + Name + " names");
-                            if (Name.equals(log) && Password.equals(pass)){
-                                intent = new Intent(MainActivity.this, allPizzas.class);
-                                startActivity(intent);
+                    query.whereEqualTo("Name", log);
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> users, com.parse.ParseException e) {
+                            if (e == null) {
+                                parse = users.get(0);
+                                String Name = parse.getString("Name");
+                                String Password = parse.getString("Password");
+                                Log.d("name", "Name " + Name + " names");
+                                if (Name.equals(log) && Password.equals(pass)) {
+                                    intent = new Intent(MainActivity.this, allPizzas.class);
+                                    startActivity(intent);
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(MainActivity.this, e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
-
+                    });
+                }
             }
         });
 

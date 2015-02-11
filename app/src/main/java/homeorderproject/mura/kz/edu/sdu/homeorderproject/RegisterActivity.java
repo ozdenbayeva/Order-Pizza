@@ -20,10 +20,16 @@ import com.parse.ParseObject;
 public class RegisterActivity extends Activity {
 
 	private Button Reg;
-	private EditText log,pass,repass;
+	private EditText log;
+    private EditText pass;
+    private EditText repass;
+    private EditText phone;
     private ParseObject parse;
 	private Intent intent;
-	String name,pwrd,pwrd2;
+	private String name;
+    private String pwrd;
+    private String pwrd2;
+    private String phoneNum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +80,26 @@ public class RegisterActivity extends Activity {
 					log = (EditText) findViewById(R.id.RegLogin);
 					pass = (EditText) findViewById(R.id.RegPass);
 					repass = (EditText) findViewById(R.id.RegPass2);
-					
+                    phone = (EditText) findViewById(R.id.phoneNum);
+
+
 					name = log.getText().toString();
 					pwrd = pass.getText().toString();
 					pwrd2 = repass.getText().toString();
-					if (pwrd.equals(pwrd2)){
-						Log.d("OK", "True");
-                        parse.put("Name",name);
-                        parse.put("Password",pwrd);
-                        parse.saveInBackground();
-						finish();
-					}
-					else Toast.makeText(RegisterActivity.this, "passwords don't match", Toast.LENGTH_LONG).show();
+					phoneNum = phone.getText().toString();
+                    if (name.length() > 0 && pwrd.length() > 0 && phoneNum.length() > 0) {
+                        if (pwrd.equals(pwrd2)) {
+                            Log.d("OK", "True");
+                            parse.put("Name", name);
+                            parse.put("Password", pwrd);
+                            parse.put("Number",phoneNum); // Добавить в parse новую колонку
+                            parse.saveInBackground();
+                            finish();
+                        }else Toast.makeText(RegisterActivity.this, "Пароли ",
+                                Toast.LENGTH_LONG).show();
+                    }
+					else Toast.makeText(RegisterActivity.this, "fill all blanks",
+                            Toast.LENGTH_LONG).show();
 					
 				}
 				catch (Exception e){

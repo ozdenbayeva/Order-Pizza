@@ -12,6 +12,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -74,13 +77,43 @@ public class allPizzas extends Activity{
         ActionBar actionBar = getActionBar();
         if(actionBar != null){
             actionBar.setTitle("Pizza");
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         context = allPizzas.this;
         dialog = new AlertDialog.Builder(context);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater;
+        inflater = getMenuInflater();
+        inflater.inflate(R.menu.korzina, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.korzina:
+                intent = new Intent(context,korzina.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+
 
     private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
         @Override
@@ -89,9 +122,9 @@ public class allPizzas extends Activity{
             // Create a progressdialog
             mProgressDialog = new ProgressDialog(allPizzas.this);
             // Set progressdialog title
-            mProgressDialog.setTitle("types of Pizza");
+            mProgressDialog.setTitle("Виды пиццы...");
             // Set progressdialog message
-            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setMessage("Загрузка...");
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
@@ -150,44 +183,6 @@ public class allPizzas extends Activity{
                     intent = new Intent(allPizzas.this,showPizza.class);
                     intent.putExtra("name",pizzaName);
                     startActivity(intent);
-/*
-                    query2 = ParseQuery.getQuery("pizzas");
-
-                    query2.whereEqualTo("pizzasName", pizzaName);
-                    query2.findInBackground(new FindCallback<ParseObject>() {
-                        public void done(List<ParseObject> users, com.parse.ParseException e) {
-                            if (e == null) {
-                                if (users.size() > 0) {
-                                    pizza = users.get(0);
-                                    Description = pizza.get("Description").toString();
-                                }
-                            } else {
-
-                            }
-                        }
-                    });
-
-                    query3 = ParseQuery.getQuery("pizzas");
-                    query3.getInBackground(pizza.getObjectId().toString(), new GetCallback() {
-                        @Override
-                        public void done(ParseObject object, ParseException e) {
-                            if (object == null) {
-                            } else {
-                                ParseFile fileObject = (ParseFile) object.get("Photo");
-                                fileObject.getDataInBackground(new GetDataCallback() {
-                                    public void done(byte[] data, ParseException e) {
-                                        if (e == null) {
-                                            bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                            Dialog();
-                                        } else {
-                                            Log.d("test", "There was a problem downloading the data.");
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-*/
                 }
             });
         }

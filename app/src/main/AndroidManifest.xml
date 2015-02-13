@@ -15,8 +15,8 @@
         android:label="Order Pizza"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="Order Pizza" >
+            android:name=".allPizzas"
+            android:label="Заказ Пиццы" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".allPizzas" />
         <activity android:name=".showPizza" />
+        <activity android:name=".korzina" />
     </application>
 
 </manifest>

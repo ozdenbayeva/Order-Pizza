@@ -2,13 +2,29 @@ package homeorderproject.mura.kz.edu.sdu.homeorderproject;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.parse.FindCallback;
@@ -28,11 +44,17 @@ import java.util.List;
  * Created by Mura on 07.02.2015.
  */
 
+@SuppressWarnings("ALL")
 public class showPizza extends Activity {
 
+
+    private DatabaseOpenHelper helper;
+    private SQLiteDatabase mDB = null;
     private ProgressDialog mProgressDialog;
     private List<ParseObject> ob;
     private ParseObject pizza;
+    private EditText numPizza;
+    private AlertDialog.Builder dialog;
     private ParseQuery<ParseObject> query2;
     private ParseQuery<ParseObject> query3;
     private String pizzaName;
@@ -40,24 +62,69 @@ public class showPizza extends Activity {
     private String Description;
     private String objectID;
     private String object;
+    private String amount;
+    private String title;
+    private Context context;
     private ImageView image;
     private TextView text;
+    private TextView cena;
+    private String cost;
+    private String totalCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_pizza);
 
-        initialzie();
+        initialize();
 
         new RemoteDataTask().execute();
     }
 
-    private void initialzie(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater;
+        inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_pizza, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.add_pizza:
+                Dialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+    private void initialize(){
+
+        context = showPizza.this;
 
         pizzaName = getIntent().getExtras().getString("name").toString();
         image = (ImageView)findViewById(R.id.pizza);
         text = (TextView) findViewById(R.id.sostav);
+        cena = (TextView) findViewById(R.id.cost);
+
+        title = pizzaName;
+
+        dialog = new AlertDialog.Builder(context);
 
         ActionBar actionBar = getActionBar();
         if(actionBar != null){
@@ -65,9 +132,15 @@ public class showPizza extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        helper = new DatabaseOpenHelper(context);
+        mDB = helper.getWritableDatabase();
+
         Parse.initialize(this, "EMGeIYHdztJQFaraRezQlBKEp7DaRAwo6GcqNoj5",
                 "o3ipDHGnA33ROnJOUkPciBt6QBfMsF9tNlb5csfa");
+
+
     }
+
 
     private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
         @Override
@@ -78,7 +151,7 @@ public class showPizza extends Activity {
             // Set progressdialog title
             mProgressDialog.setTitle("Pizza");
             // Set progressdialog message
-            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setMessage("Загружается...");
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
@@ -109,6 +182,7 @@ public class showPizza extends Activity {
                             pizza = users.get(0);
                             Log.d("pizza Name", pizza.getObjectId().toString());
                             objectID = pizza.getObjectId().toString();
+                            cost = pizza.get("cost").toString();
                             Description = pizza.get("Description").toString();
                             object = objectID;
                             Log.d("pizza descr", Description);
@@ -128,6 +202,8 @@ public class showPizza extends Activity {
                                                     image.setImageBitmap(bmp);
                                                     Log.d("test", Description);
                                                     text.setText(Description);
+                                                    cena.setText(cost);
+
                                                 } else {
                                                     Log.d("test", "There was a problem downloading the data.");
                                                 }
@@ -151,5 +227,45 @@ public class showPizza extends Activity {
 
 
         }
+    }
+
+    private void Dialog(){
+        final LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        numPizza = new EditText(context);
+        numPizza.setLayoutParams(lp);
+        numPizza.setInputType(InputType.TYPE_CLASS_NUMBER);
+        numPizza.setHint("Количество пиццы");
+
+        dialog.setTitle(title);
+        dialog.setView(numPizza);
+
+        layout.addView(numPizza);
+
+        dialog.setView(layout);
+
+        dialog.setPositiveButton("Добавить в Корзину", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                amount = numPizza.getText().toString();
+                totalCost = Integer.parseInt(amount) * Integer.parseInt(cost) + "";
+                addToDb(amount,totalCost);
+                finish(); // метод для  самого конца
+            }
+        });
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+    private long addToDb(String amount, String totalCost){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseOpenHelper.Pizza_amount, amount);
+        values.put(DatabaseOpenHelper.Pizza_name, pizzaName);
+        values.put(DatabaseOpenHelper.Pizza_cost, cost);
+        values.put(DatabaseOpenHelper.Pizza_totalCost, totalCost);
+        return  mDB.insert(DatabaseOpenHelper.DATABASE_TABLE1, null, values);
     }
 }

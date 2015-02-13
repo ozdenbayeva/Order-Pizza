@@ -27,7 +27,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 	
 	private static final int DATABASE_VERSION = 1;
 	
-	public static final String DATABASE_TABLE1 = "Order";
+	public static final String DATABASE_TABLE1 = "Order_Pizza";
 
 	private final Context  mcontext;
 
@@ -45,8 +45,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 				+ Pizza_name  + " TEXT NOT NULL, "
 				+ Pizza_amount + " TEXT NOT NULL, "
 				+ Pizza_cost + " TEXT NOT NULL, "
-				+ Pizza_totalCost + " TEXT NOT NULL"
-                +   ");"
+				+ Pizza_totalCost + " TEXT NOT NULL);"
 		);
 
 

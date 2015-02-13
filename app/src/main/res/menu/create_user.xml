@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/register_user"
-        android:title="add"
-        android:icon="@android:drawable/ic_input_add"
-        android:orderInCategory="100"
-        android:showAsAction="always"/> 
+<item
+    android:id="@+id/register_user"
+    android:title="add"
+    android:icon="@android:drawable/ic_input_add"
+    android:orderInCategory="100"
+    android:showAsAction="always"/>
 </menu>

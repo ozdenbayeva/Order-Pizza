@@ -4,7 +4,7 @@ project "Order Pizza"
 ______________________________________
 
 Team:
--Agabyl Muratbek
--Rustemov Abay
--Ozdenbayeva Aigerim
--Assankhanuly Nurlykhan
+*-Agabyl Muratbek
+*-Rustemov Abay
+*-Ozdenbayeva Aigerim
+*-Assankhanuly Nurlykhan

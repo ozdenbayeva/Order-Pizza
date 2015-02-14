@@ -137,14 +137,4 @@ public class korzina extends Activity{
             return make;
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater;
-        inflater = getMenuInflater();
-        inflater.inflate(R.menu.korzina, menu);
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
 }

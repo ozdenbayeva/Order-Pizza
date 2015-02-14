@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -72,6 +73,8 @@ public class korzina extends Activity{
 
         helper = new DatabaseOpenHelper(this);
         mDB = helper.getWritableDatabase();
+
+
     }
 
 
@@ -136,5 +139,14 @@ public class korzina extends Activity{
         public String getMake(){
             return make;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater;
+        inflater = getMenuInflater();
+        inflater.inflate(R.menu.order_pizza, menu);
+        return super.onCreateOptionsMenu(menu);
+
     }
 }

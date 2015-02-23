@@ -69,9 +69,9 @@ import java.util.List;
  * android.view.ViewPropertyAnimator}.</p>
  *
  * <p>For a generalized {@link android.view.View.OnTouchListener} that makes any view dismissable,
- * see {@link SwipeDismissTouchListener}.</p>
+ * see </p>
  *
- * @see SwipeDismissTouchListener
+ *
  */
 public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
     // Cached ViewConfiguration and system-wide constant values

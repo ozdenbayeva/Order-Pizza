@@ -54,7 +54,10 @@ public class korzina extends Activity{
     private SQLiteDatabase mDB = null;
     private int check;
     private ArrayAdapter<AllPizza> adapter;
-    private String pizza[] = new String[100];
+    private String pizzaName[] = new String[100];
+    private String pizzaAmount[] = new String[100];
+    private String pizzaCost[] = new String[100];
+    private String pizzaTotalCost[] = new String[100];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +104,11 @@ public class korzina extends Activity{
             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                 for (int position : reverseSortedPositions){
                     adapter.remove(adapter.getItem(position));
-                    Log.d("name",pizza[position].toString());
-                    pizza[position] = "0";
+                    Log.d("name",pizzaName[position].toString());
+                    pizzaName[position] = "0";
+                    pizzaCost[position] = "0";
+                    pizzaTotalCost[position] = "0";
+                    pizzaAmount[position] = "0";
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -118,8 +124,22 @@ public class korzina extends Activity{
         if (c != null){
             if(c.moveToFirst()){
                 do{
-                    list.add(new AllPizza(c.getString(c.getColumnIndex("Name"))));
-                    pizza[check] = c.getString(c.getColumnIndex("Name"));
+                    list.add(new AllPizza(
+                            c.getString(c.getColumnIndex("Name")),
+                            c.getString(c.getColumnIndex("amount")),
+                            c.getString(c.getColumnIndex("cost")),
+                            c.getString(c.getColumnIndex("totalCost"))
+                    ));
+
+
+
+
+//                  инициализация массивов для удаления
+                    pizzaName[check] = c.getString(c.getColumnIndex("Name"));
+                    pizzaCost[check] = c.getString(c.getColumnIndex("cost"));
+                    pizzaTotalCost[check] = c.getString(c.getColumnIndex("totalCost"));
+                    pizzaAmount[check] = c.getString(c.getColumnIndex("amount"));
+
                     check++;
                     Log.d("qwe","data");
                 }while(c.moveToNext());
@@ -143,7 +163,8 @@ public class korzina extends Activity{
  * 			Proverka na view, rabotaet ili net
  */
             View itemView = convertView;
-            if (itemView == null) itemView = getLayoutInflater().inflate(R.layout.listview_item, parent, false);
+            if (itemView == null) itemView = getLayoutInflater().inflate(
+                    R.layout.listview_for_item_korzina, parent, false);
 
 
 
@@ -155,8 +176,15 @@ public class korzina extends Activity{
  * 			vstavlyaem text v list
  *
  */
-            TextView makeText = (TextView) itemView.findViewById(R.id.namePizza);
+            TextView makeText = (TextView) itemView.findViewById(R.id.namePizza2);
+            TextView makeCost = (TextView) itemView.findViewById(R.id.cost2);
+            TextView makeAmount = (TextView) itemView.findViewById(R.id.amount2);
+            TextView makeTotalCost = (TextView) itemView.findViewById(R.id.totalCost2);
+
             makeText.setText(information.getMake());
+            makeCost.setText(information.getCost());
+            makeAmount.setText(information.getAmount());
+            makeTotalCost.setText(information.getTotalCost());
 
 
             return itemView;
@@ -165,12 +193,27 @@ public class korzina extends Activity{
 
     private class AllPizza{
         private String make;
-        public AllPizza(String make){
+        private String cost;
+        private String totalCost;
+        private String amount;
+        public AllPizza(String make, String cost, String totalCost, String amount){
             super();
             this.make = make;
+            this.cost = cost;
+            this.totalCost = totalCost;
+            this.amount = amount;
         }
         public String getMake(){
             return make;
+        }
+        public String getAmount(){
+            return amount;
+        }
+        public String getCost(){
+            return cost;
+        }
+        public String getTotalCost(){
+            return totalCost;
         }
     }
 

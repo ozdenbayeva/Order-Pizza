@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/namePizza2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="5sp"
+        android:text="Название"
+        android:textSize="25sp" >
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Количество"
+        android:id="@+id/idAmount"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Цена"
+        android:textSize="20sp"
+        android:id="@+id/idCost"
+        android:layout_alignBottom="@+id/idAmount"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Полная цена"
+        android:id="@+id/idTotalCost"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/idAmount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="кол-во"
+        android:id="@+id/amount2"
+        android:textSize="15sp"
+        android:layout_below="@+id/idAmount"
+        android:layout_alignRight="@+id/idAmount"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="цена"
+        android:textSize="15sp"
+        android:id="@+id/cost2"
+        android:layout_alignTop="@+id/amount2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="полн цена"
+        android:id="@+id/totalCost2"
+        android:textSize="15sp"
+        android:layout_alignTop="@+id/cost2"
+        android:layout_alignLeft="@+id/idTotalCost"
+        android:layout_alignStart="@+id/idTotalCost" />
+
+
+</RelativeLayout>

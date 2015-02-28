@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package homeorderproject.mura.kz.edu.sdu.homeorderproject;
+package swipe;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -26,7 +26,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -44,7 +43,7 @@ import java.util.List;
  * {@link android.widget.ListView#setOnScrollListener(android.widget.AbsListView.OnScrollListener)}, passing
  * in the scroll listener returned by {@link #makeScrollListener()}. If a scroll listener is
  * already assigned, the caller should still pass scroll changes through to this listener. This will
- * ensure that this {@link homeorderproject.mura.kz.edu.sdu.homeorderproject.SwipeDismissListViewTouchListener} is paused during list view
+ * ensure that this {@link SwipeDismissListViewTouchListener} is paused during list view
  * scrolling.</p>
  *
  * <p>Example usage:</p>
@@ -98,7 +97,7 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
     private boolean mPaused;
 
     /**
-     * The callback interface used by {@link homeorderproject.mura.kz.edu.sdu.homeorderproject.SwipeDismissListViewTouchListener} to inform its client
+     * The callback interface used by {@link SwipeDismissListViewTouchListener} to inform its client
      * about a successful dismissal of one or more list item positions.
      */
     public interface DismissCallbacks {
@@ -149,10 +148,10 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
      * Returns an {@link android.widget.AbsListView.OnScrollListener} to be added to the {@link
      * android.widget.ListView} using {@link android.widget.ListView#setOnScrollListener(android.widget.AbsListView.OnScrollListener)}.
      * If a scroll listener is already assigned, the caller should still pass scroll changes through
-     * to this listener. This will ensure that this {@link homeorderproject.mura.kz.edu.sdu.homeorderproject.SwipeDismissListViewTouchListener} is
+     * to this listener. This will ensure that this {@link SwipeDismissListViewTouchListener} is
      * paused during list view scrolling.</p>
      *
-     * @see homeorderproject.mura.kz.edu.sdu.homeorderproject.SwipeDismissListViewTouchListener
+     * @see SwipeDismissListViewTouchListener
      */
     public AbsListView.OnScrollListener makeScrollListener() {
         return new AbsListView.OnScrollListener() {

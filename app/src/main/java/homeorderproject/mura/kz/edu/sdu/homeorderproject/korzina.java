@@ -2,44 +2,26 @@ package homeorderproject.mura.kz.edu.sdu.homeorderproject;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import database.DatabaseOpenHelper;
+import swipe.SwipeDismissListViewTouchListener;
 
 /**
  * Created by Mura on 07.02.2015.
@@ -77,6 +59,7 @@ public class korzina extends Activity{
         ActionBar actionBar = getActionBar();
         if(actionBar != null){
             actionBar.setTitle("Корзина");
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         context = korzina.this;
@@ -105,10 +88,12 @@ public class korzina extends Activity{
                 for (int position : reverseSortedPositions){
                     adapter.remove(adapter.getItem(position));
                     Log.d("name",pizzaName[position].toString());
-                    pizzaName[position] = "0";
-                    pizzaCost[position] = "0";
-                    pizzaTotalCost[position] = "0";
-                    pizzaAmount[position] = "0";
+
+//                    pizzaName[position] = "0";
+//                    pizzaCost[position] = "0";
+//                    pizzaTotalCost[position] = "0";
+//                    pizzaAmount[position] = "0";
+                    deleteFromDb(pizzaName[position]);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -136,6 +121,7 @@ public class korzina extends Activity{
 
 //                  инициализация массивов для удаления
                     pizzaName[check] = c.getString(c.getColumnIndex("Name"));
+                    Log.d("check", pizzaName[check]);
                     pizzaCost[check] = c.getString(c.getColumnIndex("cost"));
                     pizzaTotalCost[check] = c.getString(c.getColumnIndex("totalCost"));
                     pizzaAmount[check] = c.getString(c.getColumnIndex("amount"));
@@ -226,4 +212,30 @@ public class korzina extends Activity{
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case android.R.id.home:
+
+                finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+    private void  deleteFromDb(String name) {
+        mDB.delete(DatabaseOpenHelper.DATABASE_TABLE1,DatabaseOpenHelper.Pizza_name + "=?",
+                new String[]{name});
+        Log.d("deleted", name + " successful");
+    }
 }

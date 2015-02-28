@@ -1,0 +1,64 @@
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  1) package homeorderproject.mura.kz.edu.sdu.homeorderproject;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  2) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  3) import android.content.Context;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  4) import android.database.sqlite.SQLiteDatabase;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  5) import android.database.sqlite.SQLiteOpenHelper;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  6) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  7) public class DatabaseOpenHelper extends SQLiteOpenHelper {
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  8) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600  9) 	public static final String Order_id  = "Order_id";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 10) 	public static final String Pizza_name = "Name";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 11) 	public static final String Pizza_amount = "amount";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 12) 	public static final String Pizza_cost = "cost";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 13) 	public static final String Pizza_totalCost = "totalCost";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 14) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 15) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 16) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 17) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 18)     public static final String Admin_name = "admin_name";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 19) 	public static final String Admin_password = "admin_password";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 20) 	public static final String Admin_id = "admin_id";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 21) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 22) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 23) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 24) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 25) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 26) 	public static final String DATABASE_NAME  = "journaldb";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 27) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 28) 	private static final int DATABASE_VERSION = 1;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 29) 	
+ba3f1a13 (vipMura 2015-02-14 02:30:11 +0600 30) 	public static final String DATABASE_TABLE1 = "Order_Pizza";
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 31) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 32) 	private final Context  mcontext;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 33) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 34) 	public DatabaseOpenHelper(Context context) {
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 35) 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 36) 		this.mcontext = context;
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 37) 	}
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 38) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 39) 	@Override
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 40) 	public void onCreate(SQLiteDatabase db) {
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 41) 		// TODO Auto-generated method stub
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 42) 		db.execSQL("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE1
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 43) 				+ " ("
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 44) 				+ Order_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 45) 				+ Pizza_name  + " TEXT NOT NULL, "
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 46) 				+ Pizza_amount + " TEXT NOT NULL, "
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 47) 				+ Pizza_cost + " TEXT NOT NULL, "
+ba3f1a13 (vipMura 2015-02-14 02:30:11 +0600 48) 				+ Pizza_totalCost + " TEXT NOT NULL);"
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 49) 		);
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 50) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 51) 
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 52) 		
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 53) 	}
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 54) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 55) 	@Override
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 56) 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 57) 		// TODO Auto-generated method stub
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 58) 		onCreate(db);
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 59) 	}
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 60) 	
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 61) 	void DeleteDataBase(){
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 62) 		mcontext.deleteDatabase(DATABASE_NAME);
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 63) 	}
+e929fcd1 (vipMura 2015-02-07 00:19:45 +0600 64) }

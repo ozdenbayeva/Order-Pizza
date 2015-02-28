@@ -1,4 +1,4 @@
-package homeorderproject.mura.kz.edu.sdu.homeorderproject;
+package database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

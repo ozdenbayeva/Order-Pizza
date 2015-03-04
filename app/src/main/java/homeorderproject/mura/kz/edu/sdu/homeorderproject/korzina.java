@@ -3,6 +3,7 @@ package homeorderproject.mura.kz.edu.sdu.homeorderproject;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -89,11 +90,14 @@ public class korzina extends Activity{
                     adapter.remove(adapter.getItem(position));
                     Log.d("name",pizzaName[position].toString());
 
-//                    pizzaName[position] = "0";
-//                    pizzaCost[position] = "0";
-//                    pizzaTotalCost[position] = "0";
-//                    pizzaAmount[position] = "0";
+
                     deleteFromDb(pizzaName[position]);
+
+                    pizzaName[position] = "0";
+                    pizzaCost[position] = "0";
+                    pizzaTotalCost[position] = "0";
+                    pizzaAmount[position] = "0";
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -168,8 +172,8 @@ public class korzina extends Activity{
             TextView makeTotalCost = (TextView) itemView.findViewById(R.id.totalCost2);
 
             makeText.setText(information.getMake());
-            makeCost.setText(information.getCost());
-            makeAmount.setText(information.getAmount());
+            makeCost.setText(information.getAmount());
+            makeAmount.setText(information.getCost());
             makeTotalCost.setText(information.getTotalCost());
 
 
@@ -222,15 +226,20 @@ public class korzina extends Activity{
         //noinspection SimplifiableIfStatement
         switch (id) {
             case android.R.id.home:
-
                 finish();
-                break;
+                return true;
+            case R.id.add_pizza:
+                for (int i = 0; i < check; i++){
+                    if (!pizzaName[i].equals("0")){
+                        Log.d("ok", pizzaName[i] + " is ok");
+                    }
+                }
+                Intent intent = new Intent(korzina.this, map.class);
+                startActivity(intent);
+                return  true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-
-
     }
 
     private void  deleteFromDb(String name) {

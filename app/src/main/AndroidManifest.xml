@@ -6,8 +6,15 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -26,6 +33,11 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".showPizza" />
         <activity android:name=".korzina" />
+        <activity android:name=".map" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyD1oM4uJIBBfHlCrKIr3HyOOSVJa7Ye9fA"/>
     </application>
 
 </manifest>

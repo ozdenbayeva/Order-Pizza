@@ -5,6 +5,10 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,32 +24,65 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class map extends Activity{
 
-    static final LatLng Almaty = new LatLng(43.2565400, 76.9284800);
+    private LatLng Almaty;
     private GoogleMap map;
     private double latitude;
+    private double longtitude;
     private Location location;
+    private ImageButton gps;
+    private Marker marker;
     private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-        locationManager = (LocationManager) this
-                .getSystemService(LOCATION_SERVICE);
-        location = locationManager
-                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        latitude = location.getLatitude();
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                .getMap();
+        initialize();
 
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Almaty, 50));
 
-        // Zoom in, animating the camera.
-        map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-        Log.d("asd",map.getMyLocation() + " ");
+
+        gps.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                latitude = location.getLatitude();
+                longtitude = location.getLongitude();
+
+                Almaty = new LatLng(latitude,longtitude);
+
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(Almaty, 15));
+
+                map.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
+
+                marker = map.addMarker(new MarkerOptions().position(Almaty).title("Ваше местоположение"));
+
+            }
+        });
+
+
 
     }
+
+    private void initialize(){
+        Almaty  = new LatLng(43.2565400, 76.9284800);
+
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Almaty, 15));
+
+        // Zoom
+        map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+
+        gps = (ImageButton) findViewById(R.id.gpsButton);
+
+    }
+
+
 
 }

@@ -1,11 +1,14 @@
 package homeorderproject.mura.kz.edu.sdu.homeorderproject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -58,7 +61,24 @@ public class map extends Activity{
 
                 map.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
 
+                map.clear();
                 marker = map.addMarker(new MarkerOptions().position(Almaty).title("Ваше местоположение"));
+
+
+            }
+        });
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                latitude = latLng.latitude;
+                longtitude = latLng.longitude;
+                Almaty = new LatLng(latitude,longtitude);
+
+                map.clear();
+                marker = map.addMarker(new MarkerOptions().position(Almaty).title("Новое местоположение"));
+
+
 
             }
         });
@@ -81,8 +101,28 @@ public class map extends Activity{
 
         gps = (ImageButton) findViewById(R.id.gpsButton);
 
+        ActionBar actionBar = getActionBar();
+
+
+        if(actionBar != null){
+            actionBar.setTitle("Карта");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

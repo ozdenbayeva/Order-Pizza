@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="homeorderproject.mura.kz.edu.sdu.homeorderproject" >
 
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
@@ -34,6 +35,7 @@
         <activity android:name=".showPizza" />
         <activity android:name=".korzina" />
         <activity android:name=".map" />
+
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
